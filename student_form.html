@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% if mode == "add" %}
+    {% set page_title = "Добавление студента" %}
+{% else %}
+    {% set page_title = "Редактирование студента" %}
+{% endif %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-3">{{ page_title }}</h1>
+
+<form method="post" class="card p-3">
+    <div class="mb-3">
+        <label for="full_name" class="form-label">ФИО</label>
+        <input
+            type="text"
+            class="form-control"
+            id="full_name"
+            name="full_name"
+            required
+            value="{% if student %}{{ student.full_name }}{% endif %}"
+        >
+    </div>
+
+    <div class="mb-3">
+        <label for="group_name" class="form-label">Группа</label>
+        <input
+            type="text"
+            class="form-control"
+            id="group_name"
+            name="group_name"
+            required
+            value="{% if student %}{{ student.group_name }}{% endif %}"
+        >
+    </div>
+
+    <div class="mb-3">
+        <label for="age" class="form-label">Возраст</label>
+        <input
+            type="number"
+            class="form-control"
+            id="age"
+            name="age"
+            required
+            min="16"
+            max="100"
+            value="{% if student %}{{ student.age }}{% endif %}"
+        >
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <a href="{{ url_for('students_list') }}" class="btn btn-outline-secondary">
+            Назад к списку
+        </a>
+        <button type="submit" class="btn btn-success">
+            {% if mode == "add" %}Сохранить{% else %}Обновить{% endif %}
+        </button>
+    </div>
+</form>
+{% endblock %}
